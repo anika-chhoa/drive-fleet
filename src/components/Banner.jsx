@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
+// const CAR_IMAGE =
+//   "https://lh3.googleusercontent.com/aida-public/AB6AXuDwMeMyOdF6hMyIz6S2X-YadZLNKpgdv7pkeX8ANPQOR3QHuca2Txx9r0A8hiJunZ4wHqSKz_UF2PD5SYRmhVljQ1ywt44B9d0HtHvSVA_iesFYV91X7berIeS3MT6m6FCQtzxiebhqmkacENsitxAhQsJnbua5e9pSsiJLkLP5L49daAVMC4dwFo5v7IxYk2vfv4CEkfoVch95rlG_LT0kz_DIRI4fcTgPq-Y1HGvQVQPky3K26V8o5JlbWUNvbfacf8Wx8rmZxw8";
 const CAR_IMAGE =
   "https://i.pinimg.com/1200x/2a/f9/e8/2af9e876981bb9f21f17f5de43be5659.jpg";
 
@@ -98,7 +100,7 @@ export default function Banner() {
           >
             <Link
               href="/explore"
-              className="inline-flex items-center justify-center font-bold rounded-xl bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-[#2a1700] hover:shadow-[0_0_20px_rgba(245,158,11,0.45)] active:scale-95 transition-all duration-200 text-sm px-5 py-3 md:text-base md:px-7 md:py-3 lg:text-lg lg:px-6 lg:py-3"
+              className="inline-flex items-center justify-center font-bold rounded-xl bg-gradient-to-br from-[#F59E0B]/70 to-[#D97706] text-[#2a1700] hover:shadow-[0_0_20px_rgba(245,158,11,0.45)] active:scale-95 transition-all duration-200 text-sm px-5 py-3 md:text-base md:px-7 md:py-3 lg:text-lg lg:px-6 lg:py-3"
             >
               Explore Cars
             </Link>

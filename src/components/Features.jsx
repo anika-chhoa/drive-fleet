@@ -49,8 +49,8 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#000f21]">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-16">
+    <section className="pb-24 bg-[#000f21]">
+      <div className="max-w-7xl mx-auto px-4 md:px-16">
         <motion.div
           className="text-center mb-16 space-y-4"
           initial={{ opacity: 0, y: 20 }}
@@ -58,7 +58,7 @@ const Features = () => {
           viewport={{ once: true, amount: 0.8 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-[32px] font-bold leading-[1.2] text-[#ffc174] font-sans">
+          <h2 className="text-[32px] font-bold leading-[1.2] text-[#d3e4fe] font-sans">
             Uncompromising Standards
           </h2>
           <p className="text-[#d8c3ad] max-w-2xl mx-auto text-[16px] leading-[1.5] font-sans">
@@ -80,7 +80,7 @@ const Features = () => {
             return (
               <motion.div
                 key={idx}
-                className="p-4 lg:p-8 bg-[#102034] rounded-2xl border border-[#534434]/20 hover:border-[#ffc174]/40 transition-colors duration-300 group"
+                className="p-4 lg:p-8 bg-[#102034] rounded-2xl  border border-[#534434]/20 hover:border-[#ffc174]/40 transition-colors duration-300 group"
                 variants={cardVariants}
                 whileHover={{
                   scale: 1.02,
@@ -88,12 +88,8 @@ const Features = () => {
                 }}
               >
                 <motion.div
-                  className="w-12 h-12 lg:w-16 lh:h-16 rounded-xl flex items-center justify-center mb-6 shadow-xl shadow-[#ffc174]/10"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                  }}
-                  whileHover={{ scale: 1.1 }}
+                  className="w-12 h-12 lg:w-16 bg-gradient-to-br from-[#F59E0B]/70 to-[#D97706] rounded-xl flex items-center justify-center mb-6"
+                  leHover={{ scale: 1.1 }}
                 >
                   <IconComponent className="w-7 h-7 text-[#472a00]" />
                 </motion.div>
