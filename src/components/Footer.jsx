@@ -1,7 +1,27 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Mail, MapPin, PhoneCall } from "lucide-react";
 import Link from "next/link";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.16,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 const COMPANY_LINKS = [
   { label: "About Us", href: "/about" },
@@ -99,53 +119,43 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#000f21] border-t border-[#534434]/40">
-      {/* <div className="max-w-7xl mx-auto px-4 space-y-6 md:px-12 lg:px-16 pt-12">
-        <Link href="/" className="text-[24px] font-bold text-[#ffc174]">
-          DriveFleet
-        </Link>
-
-        <p className="text-[#d8c3ad] text-[15px] leading-relaxed">
-          Premium car rental experience with elite service and modern fleet.
-        </p>
-
-        <div className="flex gap-3">
-          {SOCIAL_LINKS.map(({ label, href, icon }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#102034] border border-[#534434] text-[#d8c3ad] hover:text-[#ffc174] hover:border-[#ffc174]/50 transition"
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
-      </div> */}
+    <motion.footer
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={container}
+      className="bg-[#000f21] border-t border-[#534434]/40"
+    >
       <div className="max-w-7xl mx-auto text-sm px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-12 grid grid-cols-2 lg:grid-cols-5 gap-2 md:gap-8">
-        <div className="col-span-2 lg:col-span-1">
-        <Link href="/" className="text-[24px] font-bold text-[#ffc174]">
-          DriveFleet
-        </Link>
+        {/* Brand Section */}
+        <motion.div variants={item} className="col-span-2 lg:col-span-1">
+          <Link href="/" className="text-[24px] font-bold text-[#ffc174]">
+            DriveFleet
+          </Link>
 
-        <p className="text-[#d8c3ad] text-[15px] leading-relaxed">
-          Premium car rental experience with elite service and modern fleet.
-        </p>
+          <p className="text-[#d8c3ad] text-[15px] leading-relaxed">
+            Premium car rental experience with elite service and modern fleet.
+          </p>
 
-        <div className="flex gap-3">
-          {SOCIAL_LINKS.map(({ label, href, icon }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#102034] border border-[#534434] text-[#d8c3ad] hover:text-[#ffc174] hover:border-[#ffc174]/50 transition"
-            >
-              {icon}
-            </a>
-          ))}
-        </div>
-      </div>
-        <div>
+          <div className="flex gap-3 pt-4">
+            {SOCIAL_LINKS.map(({ label, href, icon }) => (
+              <motion.a
+                key={label}
+                variants={item}
+                href={href}
+                aria-label={label}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-[#102034] border border-[#534434] text-[#d8c3ad] hover:text-[#ffc174] hover:border-[#ffc174]/50 transition"
+              >
+                {icon}
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Company */}
+        <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Company
           </h4>
@@ -156,9 +166,10 @@ export default function Footer() {
               </FooterLink>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <div>
+        {/* Useful */}
+        <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Useful Links
           </h4>
@@ -169,9 +180,10 @@ export default function Footer() {
               </FooterLink>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <div>
+        {/* Legal */}
+        <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Legal
           </h4>
@@ -182,12 +194,14 @@ export default function Footer() {
               </FooterLink>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <div>
+        {/* Contact */}
+        <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Contact Info
           </h4>
+
           <ul className="space-y-2 text-[#d8c3ad] text-[14px]">
             <li className="flex items-center gap-2">
               <Mail size={16} className="text-[#ffc174]" />
@@ -204,17 +218,21 @@ export default function Footer() {
               <span>Dhanmondi, Dhaka</span>
             </li>
           </ul>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="border-t border-[#534434]/20 py-6 px-4 sm:px-8 md:px-12 lg:px-16 max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center text-center gap-3">
+      {/* Bottom Bar */}
+      <motion.div
+        variants={item}
+        className="border-t border-[#534434]/20 py-6 px-4 sm:px-8 md:px-12 lg:px-16 max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center text-center gap-3"
+      >
         <span className="text-[#a08e7a] text-[12px]">
           © {currentYear} DriveFleet. All rights reserved.
         </span>
         <span className="text-[#a08e7a] text-[12px]">
           Crafted for modern mobility.
         </span>
-      </div>
-    </footer>
+      </motion.div>
+    </motion.footer>
   );
 }
