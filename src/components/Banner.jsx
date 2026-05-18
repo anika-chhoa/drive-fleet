@@ -22,7 +22,7 @@ export default function Banner() {
         <div
           className="absolute inset-0 z-10
           lg:bg-gradient-to-r  lg:from-[#031427] lg:via-[#031427]/50 lg:to-[#031427]/30
-          bg-gradient-to-r from-[#031427] via-[#031427]/50 to-transparent
+          bg-gradient-to-r from-[#031427] to-[#031427]/30
           md:via-[#031427]/60"
         />
 
@@ -42,8 +42,8 @@ export default function Banner() {
         sm:px-8
         md:px-12
         lg:px-16
-        mt-auto pb-10
-        sm:mt-0 sm:pb-0 sm:flex sm:items-center sm:h-full"
+        md:mt-auto md:pb-10
+        mt-0 pb-0 flex items-center h-full"
       >
         <div
           className="
