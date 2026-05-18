@@ -38,7 +38,7 @@ const imageVariant = {
 export default function Banner() {
   return (
     <section className="relative flex items-center overflow-hidden h-[560px] sm:h-[660px] md:h-[750px]">
-      {/* Background */}
+      
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 z-10 lg:bg-gradient-to-r lg:from-[#031427] lg:via-[#031427]/50 lg:to-[#031427]/30 bg-gradient-to-r from-[#031427] to-[#031427]/30 md:via-[#031427]/60" />
 
@@ -59,7 +59,7 @@ export default function Banner() {
         </motion.div>
       </div>
 
-      {/* Content */}
+      
       <motion.div
         variants={container}
         initial="hidden"
@@ -98,7 +98,7 @@ export default function Banner() {
           >
             <Link
               href="/explore"
-              className="inline-flex items-center justify-center font-bold rounded-xl bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-[#2a1700] hover:shadow-[0_0_20px_rgba(245,158,11,0.45)] active:scale-95 transition-all duration-200 text-[14px] px-5 py-3 sm:text-[15px] sm:px-6 sm:py-3.5 md:text-[16px] md:px-7 md:py-4 lg:text-[18px] lg:px-8 lg:py-4"
+              className="inline-flex items-center justify-center font-bold rounded-xl bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-[#2a1700] hover:shadow-[0_0_20px_rgba(245,158,11,0.45)] active:scale-95 transition-all duration-200 text-sm px-5 py-3 md:text-base md:px-7 md:py-3 lg:text-lg lg:px-6 lg:py-3"
             >
               Explore Cars
             </Link>

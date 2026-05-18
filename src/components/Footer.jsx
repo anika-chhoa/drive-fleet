@@ -127,7 +127,7 @@ export default function Footer() {
       className="bg-[#000f21] border-t border-[#534434]/40"
     >
       <div className="max-w-7xl mx-auto text-sm px-4 sm:px-8 md:px-12 lg:px-16 py-8 md:py-12 grid grid-cols-2 lg:grid-cols-5 gap-2 md:gap-8">
-        {/* Brand Section */}
+        
         <motion.div variants={item} className="col-span-2 lg:col-span-1">
           <Link href="/" className="text-[24px] font-bold text-[#ffc174]">
             DriveFleet
@@ -154,7 +154,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Company */}
+        
         <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Company
@@ -168,7 +168,7 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Useful */}
+        
         <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Useful Links
@@ -182,7 +182,7 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Legal */}
+        
         <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Legal
@@ -196,7 +196,7 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Contact */}
+        
         <motion.div variants={item}>
           <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
             Contact Info
@@ -221,7 +221,7 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* Bottom Bar */}
+      
       <motion.div
         variants={item}
         className="border-t border-[#534434]/20 py-6 px-4 sm:px-8 md:px-12 lg:px-16 max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center text-center gap-3"

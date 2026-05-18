@@ -16,8 +16,7 @@ export default function MainNavbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Fake auth (replace later with real auth)
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -43,8 +42,7 @@ export default function MainNavbar() {
   };
 
   return (
-    <>
-      {/* NAVBAR */}
+    <div>
       <header
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled
@@ -53,9 +51,7 @@ export default function MainNavbar() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between">
-          {/* LEFT: Mobile menu + logo */}
           <div className="flex items-center gap-3">
-            {/* Mobile menu button */}
             <button
               onClick={() => setMenuOpen(true)}
               className="md:hidden text-[#d8c3ad]"
@@ -63,9 +59,8 @@ export default function MainNavbar() {
               <Menu />
             </button>
 
-            {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <div className="p-2 bg-[#F59E0B] rounded-xl">
+              <div className="px-2 py-1 bg-[#F59E0B] rounded-xl">
                 <Car className="w-5 h-5 text-black" />
               </div>
               <span className="text-xl font-bold text-[#ffc174]">
@@ -74,7 +69,6 @@ export default function MainNavbar() {
             </Link>
           </div>
 
-          {/* DESKTOP NAV LINKS */}
           <div className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
@@ -100,18 +94,15 @@ export default function MainNavbar() {
             })}
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="flex items-center gap-3">
-            {/* LOGIN / PROFILE */}
             {!isLoggedIn ? (
               <Link href="/login">
-                <button className="bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-black font-bold px-5 py-2 rounded-full">
+                <button className="bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-black font-bold px-4 py-1 rounded-full">
                   Login
                 </button>
               </Link>
             ) : (
               <div className="relative">
-                {/* Avatar Button */}
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
                   className="flex items-center"
@@ -124,7 +115,6 @@ export default function MainNavbar() {
                   />
                 </button>
 
-                {/* Dropdown */}
                 {profileOpen && (
                   <div className="absolute right-0 top-12 w-56 bg-[#0b1c30] border border-white/10 rounded-2xl shadow-xl flex flex-col py-2">
                     <div className="px-4 py-3 border-b border-white/10">
@@ -176,7 +166,6 @@ export default function MainNavbar() {
         </nav>
       </header>
 
-      {/* BACKDROP */}
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
@@ -184,7 +173,6 @@ export default function MainNavbar() {
         />
       )}
 
-      {/* LEFT MOBILE DRAWER */}
       <div
         className={`fixed top-0 left-0 h-full w-[280px] z-50 md:hidden
         bg-[#0b1c30] border-r border-white/10
@@ -219,8 +207,7 @@ export default function MainNavbar() {
         </div>
       </div>
 
-      {/* Spacer */}
       <div className="h-16" />
-    </>
+    </div>
   );
 }
