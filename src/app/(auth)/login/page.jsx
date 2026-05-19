@@ -72,9 +72,9 @@ export default function Login() {
   };
 
   const handleGoogleLogin = async () => {
-    console.log("Google Login");
-
-    // google login logic
+    await authClient.signIn.social({
+    provider: "google",
+  });
   };
 
   return (

@@ -20,8 +20,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
@@ -42,7 +40,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     setProfileOpen(false);
-    await authClient.signOut()
+    await authClient.signOut();
     router.push("/");
   };
 
@@ -101,11 +99,18 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             {!user ? (
-              <Link href="/login">
-                <button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold px-4 py-1 rounded-full">
-                  Login
-                </button>
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link href="/login">
+                  <button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold px-4 py-[5px] rounded-full">
+                    Login
+                  </button>
+                </Link>
+                <Link href="/register" className="hidden md:block">
+                  <button className="border-2 border-[#FDB813] text-[#FDB813] font-bold px-3 py-1 rounded-full hover:bg-[#FDB813] hover:text-[#000f21] transition-all duration-300">
+                    Register
+                  </button>
+                </Link>
+              </div>
             ) : (
               <div className="relative">
                 <button
@@ -113,23 +118,23 @@ export default function Navbar() {
                   className="flex items-center"
                 >
                   <Avatar>
-                <Avatar.Image
-                  referrerPolicy="no-referrer"
-                  alt="John Doe"
-                  src={user?.image}
-                  className="object-cover"
-                />
-                <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
-              </Avatar>
+                    <Avatar.Image
+                      referrerPolicy="no-referrer"
+                      alt="John Doe"
+                      src={user?.image}
+                      className="object-cover"
+                    />
+                    <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+                  </Avatar>
                 </button>
 
                 {profileOpen && (
                   <div className="absolute right-0 top-12 w-56 bg-[#0b1c30] border border-white/10 rounded-2xl shadow-xl flex flex-col py-2">
                     <div className="px-4 py-3 border-b border-white/10">
-                      <p className="text-sm font-bold text-white">{user.name}</p>
-                      <p className="text-xs text-gray-400">
-                        {user.email}
+                      <p className="text-sm font-bold text-white">
+                        {user.name}
                       </p>
+                      <p className="text-xs text-gray-400">{user.email}</p>
                     </div>
 
                     <Link

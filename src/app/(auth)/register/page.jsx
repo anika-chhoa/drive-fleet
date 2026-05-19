@@ -76,6 +76,11 @@ export default function Register() {
       router.push("/login");
     }
   };
+   const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+    provider: "google",
+  });
+  };
 
   return (
     <motion.section
@@ -351,6 +356,7 @@ export default function Register() {
               >
                 <Button
                   fullWidth
+                  onClick={handleGoogleLogin}
                   variant="bordered"
                   size="lg"
                   className="border-white/10 bg-white/5 text-white hover:bg-white/10"
