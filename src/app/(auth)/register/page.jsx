@@ -67,8 +67,8 @@ export default function Register() {
       name: user.name,
       image: user.imageURL,
     });
-    console.log("SIGNUP RESPONSE:", data);
-    console.log("TOKEN:", data?.session?.token || data?.session?.accessToken);
+    console.log(data, error);
+
     if (error) {
       toast.error(error.message);
     } else {

@@ -6,9 +6,13 @@ import { useEffect, useState } from "react";
 
 import { Car, LayoutDashboard, List, LogOut, Menu, Plus } from "lucide-react";
 
+import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
 
-export default function MainNavbar() {
+export default function Navbar() {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -16,7 +20,7 @@ export default function MainNavbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isLoggedIn = false;
+  
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -36,8 +40,9 @@ export default function MainNavbar() {
     { label: "My Bookings", href: "/bookings" },
   ];
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setProfileOpen(false);
+    await authClient.signOut()
     router.push("/");
   };
 
@@ -95,7 +100,7 @@ export default function MainNavbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            {!isLoggedIn ? (
+            {!user ? (
               <Link href="/login">
                 <button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold px-4 py-1 rounded-full">
                   Login
@@ -107,20 +112,23 @@ export default function MainNavbar() {
                   onClick={() => setProfileOpen(!profileOpen)}
                   className="flex items-center"
                 >
-                  <Avatar
-                    src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe"
-                    name="DriveFleet User"
-                    size="sm"
-                    className="border-2 border-[#F59E0B]/20"
-                  />
+                  <Avatar>
+                <Avatar.Image
+                  referrerPolicy="no-referrer"
+                  alt="John Doe"
+                  src={user?.image}
+                  className="object-cover"
+                />
+                <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+              </Avatar>
                 </button>
 
                 {profileOpen && (
                   <div className="absolute right-0 top-12 w-56 bg-[#0b1c30] border border-white/10 rounded-2xl shadow-xl flex flex-col py-2">
                     <div className="px-4 py-3 border-b border-white/10">
-                      <p className="text-sm font-bold text-white">My Account</p>
+                      <p className="text-sm font-bold text-white">{user.name}</p>
                       <p className="text-xs text-gray-400">
-                        user@drivefleet.com
+                        {user.email}
                       </p>
                     </div>
 
