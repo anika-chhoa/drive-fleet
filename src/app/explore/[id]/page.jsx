@@ -64,7 +64,7 @@ const CarDetailsPage = async ({ params }) => {
               {carType}
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-black text-[#d3e4fe] leading-tight mb-5">
+            <h1 className="text-4xl md:text-5xl font-black text-[#e8f1ff] leading-tight mb-5">
               {carName}
             </h1>
 
@@ -78,7 +78,7 @@ const CarDetailsPage = async ({ params }) => {
               <div className="bg-[#102034] border border-[#534434]/20 rounded-2xl p-5">
                 <Users className="w-5 h-5 text-[#ffc174] mb-3" />
                 <p className="text-[#a08e7a] text-sm mb-1">Seat Capacity</p>
-                <h3 className="text-[#d3e4fe] text-xl font-bold">
+                <h3 className="text-[#e8f1ff] text-xl font-bold">
                   {seatCapacity} Seats
                 </h3>
               </div>
@@ -86,7 +86,7 @@ const CarDetailsPage = async ({ params }) => {
               <div className="bg-[#102034] border border-[#534434]/20 rounded-2xl p-5">
                 <MapPin className="w-5 h-5 text-[#ffc174] mb-3" />
                 <p className="text-[#a08e7a] text-sm mb-1">Pickup Location</p>
-                <h3 className="text-[#d3e4fe] text-xl font-bold">
+                <h3 className="text-[#e8f1ff] text-xl font-bold">
                   {pickupLocation}
                 </h3>
               </div>
@@ -94,7 +94,7 @@ const CarDetailsPage = async ({ params }) => {
               <div className="bg-[#102034] border border-[#534434]/20 rounded-2xl p-5">
                 <ShieldCheck className="w-5 h-5 text-[#ffc174] mb-3" />
                 <p className="text-[#a08e7a] text-sm mb-1">Rental Status</p>
-                <h3 className="text-[#d3e4fe] text-xl font-bold">
+                <h3 className="text-[#e8f1ff] text-xl font-bold">
                   Premium Protected
                 </h3>
               </div>
@@ -102,7 +102,7 @@ const CarDetailsPage = async ({ params }) => {
               <div className="bg-[#102034] border border-[#534434]/20 rounded-2xl p-5">
                 <BadgeCheck className="w-5 h-5 text-[#ffc174] mb-3" />
                 <p className="text-[#a08e7a] text-sm mb-1">Condition</p>
-                <h3 className="text-[#d3e4fe] text-xl font-bold">Excellent</h3>
+                <h3 className="text-[#e8f1ff] text-xl font-bold">Excellent</h3>
               </div>
             </div>
 

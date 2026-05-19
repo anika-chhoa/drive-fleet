@@ -8,8 +8,8 @@ const ExploreCars = async () => {
     <div className="bg-[#000f21] min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
        
-        <div className="mb-12">
-          <h1 className="text-[32px] font-bold text-[#ffc174] tracking-tight font-sans">
+        <div className="mb-12 text-center">
+          <h1 className="text-[32px] font-bold text-[#e8f1ff] tracking-tight font-sans">
             Our Elite Fleet
           </h1>
           <p className="text-[#d8c3ad] text-[16px] mt-2">
