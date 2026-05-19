@@ -4,6 +4,7 @@ import { Button, Card, Chip } from "@heroui/react";
 import { motion } from "framer-motion";
 import { MapPin, Users } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const cardVariants = {
   hidden: {
@@ -22,6 +23,7 @@ const cardVariants = {
 
 const CarCard = ({ car, index }) => {
   const isAvailable = car.availabilityStatus === "Available";
+
   return (
     <motion.div
       variants={cardVariants}
@@ -32,23 +34,20 @@ const CarCard = ({ car, index }) => {
       whileHover={{ y: -6 }}
     >
       <Card className="bg-[#102034] border border-[#534434]/20 hover:border-[#ffc174]/40 transition-all duration-300 shadow-xl overflow-hidden group rounded-2xl flex flex-col h-full">
-        {/* Image */}
         <div className="relative overflow-hidden h-[220px]">
-          {/* Availability */}
           <div className="absolute top-3 right-3 z-20">
             <Chip
               variant="flat"
               className={`text-xs font-semibold ${
                 isAvailable
                   ? "bg-emerald-500/70 text-emerald-100 border border-emerald-500/20"
-                  : "bg-rose-500/30 text-rose-400 border border-rose-500/20"
+                  : "bg-rose-500/30 text-rose-600 border border-rose-500/20"
               }`}
             >
               {car.availabilityStatus}
             </Chip>
           </div>
 
-          {/* Type */}
           <div className="absolute top-3 left-3 z-20 rounded-lg">
             <Chip className="bg-[#031427]/80 text-[#d3e4fe] text-xs backdrop-blur-sm border border-white/5">
               {car.carType}
@@ -64,10 +63,9 @@ const CarCard = ({ car, index }) => {
           />
         </div>
 
-        {/* Content */}
         <div className="p-5 flex-1 flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-bold text-[#d3e4fe] group-hover:text-[#ffc174] transition-colors line-clamp-1">
+            <h2 className="text-xl font-bold text-[#e8f1ff] group-hover:text-[#ffc174] transition-colors line-clamp-1">
               {car.carName}
             </h2>
 
@@ -86,7 +84,6 @@ const CarCard = ({ car, index }) => {
             </div>
           </div>
 
-          {/* Footer */}
           <div className="flex items-center justify-between">
             <div className="flex items-baseline text-[#ffc174]">
               <span className="text-[22px] font-black">
@@ -96,18 +93,20 @@ const CarCard = ({ car, index }) => {
               <span className="text-xs text-[#d8c3ad] ml-1">/ day</span>
             </div>
 
-            <Button
-              radius="xl"
-              size="md"
-              disabled={!isAvailable}
-              className={`font-bold shadow-lg transition-all duration-200 ${
-                isAvailable
-                  ? "bg-gradient-to-br from-[#F59E0B]/90 to-[#D97706] text-[#2a1700]"
-                  : "bg-[#26364a] text-[#d8c3ad]/40"
-              }`}
-            >
-              {isAvailable ? "View Details" : "Booked"}
-            </Button>
+            <Link href={`/explore/${car._id}`}>
+              <Button
+                radius="xl"
+                size="md"
+                disabled={!isAvailable}
+                className={`font-bold shadow-lg transition-all duration-200 ${
+                  isAvailable
+                    ? "bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21]"
+                    : "bg-[#26364a] text-[#d8c3ad]/40"
+                }`}
+              >
+                {isAvailable ? "View Details" : "Booked"}
+              </Button>
+            </Link>
           </div>
         </div>
       </Card>

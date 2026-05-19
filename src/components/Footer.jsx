@@ -156,7 +156,7 @@ export default function Footer() {
 
         
         <motion.div variants={item}>
-          <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
+          <h4 className="text-[#e8f1ff] font-bold text-[15px] uppercase tracking-widest mb-4">
             Company
           </h4>
           <ul className="space-y-2">
@@ -170,7 +170,7 @@ export default function Footer() {
 
         
         <motion.div variants={item}>
-          <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
+          <h4 className="text-[#e8f1ff] font-bold text-[15px] uppercase tracking-widest mb-4">
             Useful Links
           </h4>
           <ul className="space-y-2">
@@ -184,7 +184,7 @@ export default function Footer() {
 
         
         <motion.div variants={item}>
-          <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
+          <h4 className="text-[#e8f1ff] font-bold text-[15px] uppercase tracking-widest mb-4">
             Legal
           </h4>
           <ul className="space-y-2">
@@ -198,7 +198,7 @@ export default function Footer() {
 
         
         <motion.div variants={item}>
-          <h4 className="text-[#d3e4fe] font-bold text-[15px] uppercase tracking-widest mb-4">
+          <h4 className="text-[#e8f1ff] font-bold text-[15px] uppercase tracking-widest mb-4">
             Contact Info
           </h4>
 

@@ -97,7 +97,7 @@ export default function MainNavbar() {
           <div className="flex items-center gap-3">
             {!isLoggedIn ? (
               <Link href="/login">
-                <button className="bg-gradient-to-br from-[#F59E0B] to-[#D97706] text-black font-bold px-4 py-1 rounded-full">
+                <button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold px-4 py-1 rounded-full">
                   Login
                 </button>
               </Link>

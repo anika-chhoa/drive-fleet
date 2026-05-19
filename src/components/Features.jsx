@@ -49,7 +49,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="pb-24 bg-[#000f21]">
+    <section className="pt-8 md:pt-4 pb-24 bg-[#000f21]">
       <div className="max-w-7xl mx-auto px-4 md:px-16">
         <motion.div
           className="text-center mb-16 space-y-4"
@@ -58,7 +58,7 @@ const Features = () => {
           viewport={{ once: true, amount: 0.8 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-[32px] font-bold leading-[1.2] text-[#d3e4fe] font-sans">
+          <h2 className="text-[32px] font-bold leading-[1.2] text-[#e8f1ff] font-sans">
             Uncompromising Standards
           </h2>
           <p className="text-[#d8c3ad] max-w-2xl mx-auto text-[16px] leading-[1.5] font-sans">
@@ -88,13 +88,13 @@ const Features = () => {
                 }}
               >
                 <motion.div
-                  className="w-12 h-12 lg:w-16 bg-gradient-to-br from-[#F59E0B]/70 to-[#D97706] rounded-xl flex items-center justify-center mb-6"
-                  leHover={{ scale: 1.1 }}
+                  className="w-12 h-12 lg:w-16 bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] rounded-xl flex items-center justify-center mb-6"
+                  whileHover={{ scale: 1.1 }}
                 >
                   <IconComponent className="w-7 h-7 text-[#472a00]" />
                 </motion.div>
 
-                <h3 className="text-[24px] font-semibold leading-[1.3] text-[#d3e4fe] mb-4 group-hover:text-[#ffc174] transition-colors duration-300 font-sans">
+                <h3 className="text-[24px] font-semibold leading-[1.3] text-[#e8f1ff] mb-4 group-hover:text-[#ffc174] transition-colors duration-300 font-sans">
                   {feature.title}
                 </h3>
                 <p className="text-[#d8c3ad] leading-relaxed text-[16px] font-sans">
