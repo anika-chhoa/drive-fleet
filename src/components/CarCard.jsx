@@ -68,8 +68,11 @@ const CarCard = ({ car, index }) => {
             <h2 className="text-xl font-bold text-[#e8f1ff] group-hover:text-[#ffc174] transition-colors line-clamp-1">
               {car.carName}
             </h2>
-
-            <div className="flex justify-between gap-3 mb-6 border-t border-[#534434]/20 pt-3">
+            <p className="text-sm text-[#9fb0c7] leading-relaxed line-clamp-2 mt-2">
+              {car.description}
+            </p>
+            
+            <div className="flex justify-between gap-3 border-t border-[#534434]/20 pt-3 mt-2">
               <div className="flex items-center gap-2 text-[#d8c3ad]">
                 <Users className="w-4 h-4 text-[#ffc174]" />
                 <span className="text-sm">{car.seatCapacity} Seats</span>
@@ -82,14 +85,18 @@ const CarCard = ({ car, index }) => {
                 </span>
               </div>
             </div>
+            
+            {/* Adjusted Spacing and Design System Color */}
+            <p className="text-xs text-[#9fb0c7] mt-3">
+              {car.bookingCount}+ bookings completed
+            </p>
           </div>
-
-          <div className="flex items-center justify-between">
+          
+          <div className="flex items-center justify-between mt-6">
             <div className="flex items-baseline text-[#ffc174]">
               <span className="text-[22px] font-black">
                 ${car.dailyRentPrice}
               </span>
-
               <span className="text-xs text-[#d8c3ad] ml-1">/ day</span>
             </div>
 

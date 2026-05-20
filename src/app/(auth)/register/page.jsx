@@ -17,6 +17,8 @@ import { Car, ShieldCheck, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { useState } from "react";
 
 const containerVariants = {
   hidden: {
@@ -54,6 +56,7 @@ export default function Register() {
   //   });
 
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -76,10 +79,10 @@ export default function Register() {
       router.push("/login");
     }
   };
-   const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async () => {
     await authClient.signIn.social({
-    provider: "google",
-  });
+      provider: "google",
+    });
   };
 
   return (
@@ -278,7 +281,7 @@ export default function Register() {
                       return null;
                     }}
                   >
-                    <Label>Image URL</Label>
+                    <Label>Photo URL</Label>
 
                     <Input
                       className="w-full"
@@ -292,28 +295,37 @@ export default function Register() {
                 <motion.div variants={fadeUp} className="w-full">
                   <TextField
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     isRequired
                     className="w-full"
                     validate={(value) => {
-                      if (value.length < 6) {
+                      if (!value || value.length < 6) {
                         return "Password must be at least 6 characters";
-                      }
-                      if (!/[A-Z]/.test(value)) {
-                        return "Password must contain at least one uppercase letter";
-                      }
-                      if (!/[a-z]/.test(value)) {
-                        return "Password must contain at least one lowercase letter";
                       }
                       return null;
                     }}
                   >
                     <Label>Password</Label>
 
-                    <Input
-                      className="w-full"
-                      placeholder="Enter Your Password"
-                    />
+                    <div className="flex items-center w-full input py-0 my-0">
+                      <Input
+                        className="flex-1 outline-none"
+                        placeholder="Enter Your Password"
+                        type={showPassword ? "text" : "password"}
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="text-[#8fa3bf] hover:text-[#FDB813] transition ml-2"
+                      >
+                        {showPassword ? (
+                          <MdVisibility size={18} />
+                        ) : (
+                          <MdVisibilityOff size={18} />
+                        )}
+                      </button>
+                    </div>
 
                     <FieldError />
                   </TextField>

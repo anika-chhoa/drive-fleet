@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
 import { Car, LayoutDashboard, List, LogOut, Menu, Plus } from "lucide-react";
-
 import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
 
@@ -99,18 +97,11 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             {!user ? (
-              <div className="flex items-center gap-2">
-                <Link href="/login">
+              <Link href="/login">
                   <button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold px-4 py-[5px] rounded-full">
                     Login
                   </button>
                 </Link>
-                <Link href="/register" className="hidden md:block">
-                  <button className="border-2 border-[#FDB813] text-[#FDB813] font-bold px-3 py-1 rounded-full hover:bg-[#FDB813] hover:text-[#000f21] transition-all duration-300">
-                    Register
-                  </button>
-                </Link>
-              </div>
             ) : (
               <div className="relative">
                 <button
@@ -124,7 +115,7 @@ export default function Navbar() {
                       src={user?.image}
                       className="object-cover"
                     />
-                    <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+                    <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
                   </Avatar>
                 </button>
 
@@ -132,9 +123,9 @@ export default function Navbar() {
                   <div className="absolute right-0 top-12 w-56 bg-[#0b1c30] border border-white/10 rounded-2xl shadow-xl flex flex-col py-2">
                     <div className="px-4 py-3 border-b border-white/10">
                       <p className="text-sm font-bold text-white">
-                        {user.name}
+                        {user?.name}
                       </p>
-                      <p className="text-xs text-gray-400">{user.email}</p>
+                      <p className="text-xs text-gray-400">{user?.email}</p>
                     </div>
 
                     <Link

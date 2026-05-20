@@ -1,9 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { motion } from "framer-motion";
 
 import {
   Button,
@@ -15,11 +14,12 @@ import {
   TextField,
 } from "@heroui/react";
 
-import { Car, ShieldCheck, Sparkles } from "lucide-react";
-
 import { authClient } from "@/lib/auth-client";
+import { Car, ShieldCheck, Sparkles } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const containerVariants = {
   hidden: {
@@ -50,6 +50,7 @@ const fadeUp = {
 
 export default function Login() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -73,8 +74,8 @@ export default function Login() {
 
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
-    provider: "google",
-  });
+      provider: "google",
+    });
   };
 
   return (
@@ -84,7 +85,6 @@ export default function Login() {
       animate="visible"
       className="min-h-screen bg-[#000f21] text-white flex items-center justify-center px-4 py-10 overflow-hidden relative"
     >
-      {/* BACKGROUND */}
       <div className="absolute inset-0 opacity-20 overflow-hidden">
         <motion.div
           animate={{
@@ -170,7 +170,6 @@ export default function Login() {
           </div>
         </motion.div>
 
-
         <motion.div
           variants={fadeUp}
           initial={{
@@ -190,7 +189,6 @@ export default function Login() {
         >
           <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl rounded-3xl">
             <div className="p-8 md:p-10">
-            
               <div className="flex items-center gap-3 mb-8">
                 <motion.div
                   whileHover={{
@@ -213,13 +211,11 @@ export default function Login() {
                 </div>
               </div>
 
-              
               <Form
                 className="grid grid-cols-1 gap-6 w-full"
                 onSubmit={handleLogin}
                 render={(props) => <form {...props} />}
               >
-               
                 <motion.div variants={fadeUp} className="w-full">
                   <TextField
                     name="email"
@@ -244,33 +240,46 @@ export default function Login() {
                   </TextField>
                 </motion.div>
 
-                
                 <motion.div variants={fadeUp} className="w-full">
                   <TextField
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     isRequired
                     className="w-full"
                     validate={(value) => {
                       if (!value || value.length < 6) {
                         return "Password must be at least 6 characters";
                       }
-
                       return null;
                     }}
                   >
                     <Label>Password</Label>
 
-                    <Input
-                      className="w-full"
-                      placeholder="Enter Your Password"
-                    />
+                    
+                    <div className="flex items-center w-full input py-0 my-0">
+                      <Input
+                        className="flex-1 outline-none"
+                        placeholder="Enter Your Password"
+                        type={showPassword ? "text" : "password"}
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="text-[#8fa3bf] hover:text-[#FDB813] transition ml-2"
+                      >
+                        {showPassword ? (
+                          <MdVisibility size={18} />
+                        ) : (
+                          <MdVisibilityOff size={18} />
+                        )}
+                      </button>
+                    </div>
 
                     <FieldError />
                   </TextField>
                 </motion.div>
 
-                
                 <motion.div
                   whileHover={{
                     scale: 1.02,
@@ -290,7 +299,6 @@ export default function Login() {
                 </motion.div>
               </Form>
 
-              
               <div className="flex items-center gap-3 my-6">
                 <div className="flex-1 h-px bg-white/10" />
 
@@ -299,7 +307,6 @@ export default function Login() {
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
-              
               <motion.div
                 whileHover={{
                   scale: 1.02,
@@ -320,7 +327,6 @@ export default function Login() {
                 </Button>
               </motion.div>
 
-              
               <p className="text-center text-sm text-[#8fa3bf] mt-6">
                 Don&apos;t have an account?{" "}
                 <Link
