@@ -328,7 +328,7 @@ export default function Login() {
               </motion.div>
 
               <p className="text-center text-sm text-[#8fa3bf] mt-6">
-                Don&apos;t have an account?{" "}
+                Don't have an account?{" "}
                 <Link
                   href="/register"
                   className="text-[#FDB813] font-semibold hover:opacity-80 transition"

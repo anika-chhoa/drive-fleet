@@ -1,5 +1,7 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
+import { DateField, Label } from "@heroui/react";
 import { motion } from "framer-motion";
 import {
   BadgeCheck,
@@ -15,7 +17,10 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 const container = {
   hidden: { opacity: 0 },
@@ -51,14 +56,12 @@ const imageReveal = {
   },
 };
 
-
 const getPopularity = (count) => {
   if (count >= 18) return { label: "Top Booked" };
   if (count >= 12) return { label: "Popular" };
   if (count >= 7) return { label: "Trending" };
   return { label: "New" };
 };
-
 
 const StatCard = ({ icon: Icon, label, value }) => (
   <motion.div
@@ -86,7 +89,13 @@ const FeaturePill = ({ feature }) => (
 );
 
 const CarDetailsClient = ({ car }) => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  const [departureDate, setDepartureDate] = useState(null);
+  const router = useRouter();
+
   const {
+    _id,
     carName,
     carType,
     imageUrl,
@@ -101,6 +110,51 @@ const CarDetailsClient = ({ car }) => {
     reviewCount = 0,
   } = car;
 
+  const handleBooking = async () => {
+    try {
+      const bookingData = {
+        userId: user?.id,
+        userImage: user?.image,
+        userName: user?.name,
+        userEmail: user?.email,
+        _id,
+        carName,
+        carType,
+        imageUrl,
+        availabilityStatus,
+        pickupLocation,
+        dailyRentPrice,
+        bookingCount,
+        rating,
+        reviewCount,
+        departureDate,
+      };
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        },
+      );
+
+      const data = await res.json();
+
+      if (data) {
+        toast.success(`Successfully booked ${carName}`);
+        router.push("/bookings");
+      } else {
+        toast.error(data?.message || "Booking failed");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   const isAvailable = availabilityStatus === "Available";
   const { label: popLabel } = getPopularity(bookingCount);
 
@@ -111,7 +165,6 @@ const CarDetailsClient = ({ car }) => {
       animate="visible"
       className="max-w-5xl mx-auto"
     >
-      
       <motion.div
         variants={imageReveal}
         className="relative overflow-hidden rounded-2xl mb-8 border border-[#534434]/30"
@@ -127,7 +180,6 @@ const CarDetailsClient = ({ car }) => {
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#000f21] via-transparent to-transparent" />
 
-       
         <div className="absolute top-4 left-4 flex gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-[#000f21]/70 backdrop-blur-sm border border-[#534434]/40 text-[#ffc174]">
             <Car className="w-3.5 h-3.5" />
@@ -140,7 +192,6 @@ const CarDetailsClient = ({ car }) => {
           </span>
         </div>
 
-        
         <div className="absolute top-4 right-4">
           <span
             className={`px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm border ${
@@ -165,13 +216,11 @@ const CarDetailsClient = ({ car }) => {
         </div>
       </motion.div>
 
-      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* left side */}
         <div className="lg:col-span-2 space-y-6">
-          
           <motion.div variants={item}>
-            <h1 className="text-3xl md:text-4xl font-black text-[#e8f1ff] mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#e8f1ff] mb-2">
               {carName}
             </h1>
 
@@ -192,12 +241,10 @@ const CarDetailsClient = ({ car }) => {
             </div>
           </motion.div>
 
-         
           <motion.p variants={item} className="text-[#d8c3ad] text-sm">
             {description}
           </motion.p>
 
-          
           <motion.div
             variants={container}
             className="grid grid-cols-2 sm:grid-cols-4 gap-3"
@@ -213,39 +260,29 @@ const CarDetailsClient = ({ car }) => {
             whileHover={{ scale: 1.01 }}
             className="bg-[#102034] border-t border-r border-b border-[#534434]/20 border-l-2 border-l-[#ffc174] rounded-xl p-5"
           >
-            {" "}
             <div className="flex items-center justify-between">
-              {" "}
               <div>
-                {" "}
                 <p className="text-[10px] text-[#a08e7a] uppercase tracking-widest font-semibold mb-3">
-                  {" "}
-                  Booking count{" "}
-                </p>{" "}
+                  Booking count
+                </p>
                 <div className="flex items-baseline gap-2">
-                  {" "}
                   <span className="text-5xl font-black text-[#ffc174] leading-none tracking-tight">
-                    {" "}
-                    {bookingCount}{" "}
-                  </span>{" "}
-                  <span className="text-sm text-[#a08e7a]">bookings</span>{" "}
-                </div>{" "}
-              </div>{" "}
+                    {bookingCount}
+                  </span>
+                  <span className="text-sm text-[#a08e7a]">bookings</span>
+                </div>
+              </div>
               <div className="text-right mt-0">
-                {" "}
                 <span className="inline-block text-xs font-bold text-[#ffc174] bg-[#ffc174]/10 border border-[#ffc174]/25 rounded-lg px-3 py-1.5 mb-1">
-                  {" "}
-                  {popLabel}{" "}
+                  {popLabel}
                 </span>{" "}
                 <p className="text-[10px] text-[#a08e7a]">
-                  {" "}
                   top {Math.round((bookingCount / 20) * 100)}% of fleet{" "}
                 </p>{" "}
               </div>{" "}
-            </div>{" "}
+            </div>
           </motion.div>
 
-          {/* features */}
           {features.length > 0 && (
             <motion.div variants={container}>
               <p className="text-[10px] text-[#a08e7a] uppercase mb-3">
@@ -274,15 +311,30 @@ const CarDetailsClient = ({ car }) => {
                 </span>
                 <span className="text-sm text-[#a08e7a] mb-1">/day</span>
               </div>
+              <div className="mt-2 text-[#e8f1ff] font-bold">
+                {availabilityStatus}
+              </div>
             </div>
 
-            <div className="border-t border-[#534434]/20" />
+            <DateField
+              onChange={setDepartureDate}
+              className="w-full"
+              name="date"
+            >
+              <Label>Departure Date</Label>
+              <DateField.Group>
+                <DateField.Input>
+                  {(segment) => <DateField.Segment segment={segment} />}
+                </DateField.Input>
+              </DateField.Group>
+            </DateField>
 
             <motion.button
+              onClick={handleBooking}
               disabled={!isAvailable}
               whileHover={isAvailable ? { scale: 1.03 } : undefined}
               whileTap={isAvailable ? { scale: 0.97 } : undefined}
-              className={`w-full py-3 rounded-xl font-bold text-sm ${
+              className={`w-full py-2.5 rounded-xl font-bold text-sm ${
                 isAvailable
                   ? "bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#001427]"
                   : "bg-[#000f21] text-[#534434] cursor-not-allowed"
@@ -291,7 +343,7 @@ const CarDetailsClient = ({ car }) => {
               {isAvailable ? "Book Now" : "Unavailable"}
             </motion.button>
 
-            <div className="border-t border-[#534434]/20" />
+            {/* <div className="border-t border-[#534434]/20" /> */}
 
             <div className="space-y-2.5">
               {[

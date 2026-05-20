@@ -85,11 +85,6 @@ const CarCard = ({ car, index }) => {
                 </span>
               </div>
             </div>
-            
-            {/* Adjusted Spacing and Design System Color */}
-            <p className="text-xs text-[#9fb0c7] mt-3">
-              {car.bookingCount}+ bookings completed
-            </p>
           </div>
           
           <div className="flex items-center justify-between mt-6">

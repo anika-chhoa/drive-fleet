@@ -10,7 +10,7 @@ import { Avatar } from "@heroui/react";
 export default function Navbar() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
