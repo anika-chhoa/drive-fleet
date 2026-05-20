@@ -1,25 +1,41 @@
 import CarCard from "@/components/CarCard";
+import SearchBar from "@/components/SearchBar";
 import { fetchAllCars } from "@/lib/cars/data";
 
-const ExploreCars = async () => {
-  const allCars = await fetchAllCars();
-  
+const ExploreCars = async ({ searchParams }) => {
+  const sParams = await searchParams;
+  const allCars = await fetchAllCars("");
+  const filteredCars = await fetchAllCars(
+    sParams?.search || "",
+    sParams?.type || "",
+  );
+
   return (
-    <div className="bg-[#000f21] min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#000f21] via-[#071a2e] to-[#000f21] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-       
-        <div className="mb-12 text-center">
-          <h1 className="text-[32px] font-bold text-[#e8f1ff] tracking-tight font-sans">
-            Our Elite Fleet
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-[#e8f1ff]">
+            Explore Elite Fleet
           </h1>
-          <p className="text-[#d8c3ad] text-[16px] mt-2">
-            Select an extraordinary mechanical asset for your next destination.
+          <p className="text-[#9fb0c7] mt-2">
+            Premium cars crafted for premium journeys
           </p>
         </div>
 
-   
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {allCars.map((car,index) => <CarCard key={car._id} car={car} index={index}/>)}
+        <div className="max-w-xl mx-auto mb-10">
+          <SearchBar cars={filteredCars} allCars={allCars} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCars.length > 0 ? (
+            filteredCars.map((car, index) => (
+              <CarCard key={car._id} car={car} index={index} />
+            ))
+          ) : (
+            <div className="text-center text-[#9fb0c7] col-span-full py-20">
+              No cars found
+            </div>
+          )}
         </div>
       </div>
     </div>

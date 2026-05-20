@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import React from "react";
 import Image from "next/image";
 import { CalendarDays, MapPin } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@heroui/react";
 
 const Bookings = async () => {
   const session = await auth.api.getSession({
@@ -25,7 +27,7 @@ const Bookings = async () => {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/bookings/${user.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/bookings/${user?.id}`,
     {
       cache: "no-store",
     }
@@ -58,6 +60,9 @@ const Bookings = async () => {
           <p className="text-sm font-medium text-[#a08e7a]">
             No active vehicle bookings found.
           </p>
+          <Link href="/explore">
+          <Button className={`mt-4 text-semibold bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21]`}>Browse Cars</Button>
+          </Link>
         </div>
       ) : (
         <div className="space-y-5">
@@ -79,8 +84,8 @@ const Bookings = async () => {
               .toLowerCase()
               .replace(" ", "");
 
-            const count = booking.bookingCount || 1;
-            const finalPrice = booking.dailyRentPrice * count;
+            // const count = booking.bookingCount || 1;
+            // const finalPrice = booking.dailyRentPrice * count;
 
             return (
               <div
@@ -132,13 +137,13 @@ const Bookings = async () => {
                   <div className="flex flex-row items-end justify-between gap-5 sm:flex-col sm:items-end">
                     <div className="text-right">
                       <p className="text-3xl font-black tracking-tight text-[#ffc174]">
-                        ${finalPrice}
+                        ${booking.dailyRentPrice}
                       </p>
 
-                      <p className="mt-1 text-[11px] tracking-wide text-[#a08e7a]">
+                      {/* <p className="mt-1 text-[11px] tracking-wide text-[#a08e7a]">
                         {count} {count === 1 ? "day" : "days"} × $
                         {booking.dailyRentPrice}
-                      </p>
+                      </p> */}
                     </div>
 
                     
