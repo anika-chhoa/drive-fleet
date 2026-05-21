@@ -147,7 +147,7 @@ export default function Navbar() {
                     </Link>
 
                     <Link
-                      href="/my-cars"
+                      href="/myAddedCars"
                       onClick={() => setProfileOpen(false)}
                       className="px-4 py-2 text-sm hover:bg-white/5 flex items-center gap-2"
                     >

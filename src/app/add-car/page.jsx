@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -16,30 +17,57 @@ import toast from "react-hot-toast";
 const AddCars = () => {
   const handleAddCarButton = async (e) => {
     e.preventDefault();
-     const form = e.currentTarget;
-    const formData = new FormData(e.currentTarget);
+
+    const session = await authClient.getSession();
+    const user = session?.data?.user;
+
+    const form = e.target;
+    const formData = new FormData(form);
     const carData = Object.fromEntries(formData.entries());
     
-    const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-car`, {
-      method:"POST",
-      headers:{
-        'content-type':'application/json'
+    const {
+      carName,
+      dailyRentPrice,
+      seatCapacity,
+      imageUrl,
+      pickupLocation,
+      availabilityStatus,
+      description,
+    } = carData;
+
+    const newCarData={
+      userId:user?.id,
+      userName:user?.name,
+      userEmail:user?.email,
+      userImage:user?.image,
+      createdAt:new Date(user?.createdAt),
+      carName,
+      dailyRentPrice,
+      seatCapacity,
+      imageUrl,
+      pickupLocation,
+      availabilityStatus,
+      description,
+    };
+    console.log(newCarData)
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-car`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-      body:JSON.stringify(carData)
-    })
-    const data=await res.json();
+      body: JSON.stringify(newCarData),
+    });
+    const data = await res.json();
     if (data.insertedId) {
       toast.success("Destination Added Successfully");
       form.reset();
     }
-    
   };
 
   return (
     <div className="min-h-screen bg-[#000f21] px-4 py-14">
       <div className="mx-auto max-w-3xl">
-        
-        
         <div className="mb-10 text-center">
           <p className="text-[11px] uppercase tracking-[0.35em] text-[#a08e7a]">
             Fleet Management
@@ -55,10 +83,7 @@ const AddCars = () => {
           </p>
         </div>
 
-       
         <Card className="overflow-hidden rounded-3xl border border-[#534434]/20 bg-[#102034] shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
-          
-
           {/* form */}
           <form
             onSubmit={handleAddCarButton}
@@ -78,9 +103,7 @@ const AddCars = () => {
               <FieldError />
             </TextField>
 
-            
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              
               {/* price */}
               <TextField name="dailyRentPrice" type="number" isRequired>
                 <Label className="mb-2 text-sm font-medium text-[#d8c3ad]">
@@ -114,11 +137,7 @@ const AddCars = () => {
 
             {/* car type */}
             <div>
-              <Select
-                name="carType"
-                isRequired
-                placeholder="Select Car Type"
-              >
+              <Select name="carType" isRequired placeholder="Select Car Type">
                 <Label className="mb-2 text-sm font-medium text-[#d8c3ad]">
                   Car Type
                 </Label>
@@ -134,17 +153,14 @@ const AddCars = () => {
                       "SUV",
                       "Sedan",
                       "Hatchback",
-                      "Luxury",
+                      "Luxury SUV",
+                      "Luxury Sedan",
                       "Convertible",
                       "Sports",
                       "Electric",
                       "Hybrid",
                     ].map((type) => (
-                      <ListBox.Item
-                        key={type}
-                        id={type}
-                        textValue={type}
-                      >
+                      <ListBox.Item key={type} id={type} textValue={type}>
                         {type}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
@@ -201,18 +217,12 @@ const AddCars = () => {
 
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item
-                      id="Available"
-                      textValue="Available"
-                    >
+                    <ListBox.Item id="Available" textValue="Available">
                       Available
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
 
-                    <ListBox.Item
-                      id="Unavailable"
-                      textValue="Unavailable"
-                    >
+                    <ListBox.Item id="Unavailable" textValue="Unavailable">
                       Unavailable
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
