@@ -12,9 +12,13 @@ import {
   TextArea,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
+
+
 import toast from "react-hot-toast";
 
 const AddCars = () => {
+  const router=useRouter();
   const handleAddCarButton = async (e) => {
     e.preventDefault();
 
@@ -27,6 +31,7 @@ const AddCars = () => {
     
     const {
       carName,
+      carType,
       dailyRentPrice,
       seatCapacity,
       imageUrl,
@@ -42,6 +47,7 @@ const AddCars = () => {
       userImage:user?.image,
       createdAt:new Date(user?.createdAt),
       carName,
+      carType,
       dailyRentPrice,
       seatCapacity,
       imageUrl,
@@ -60,8 +66,9 @@ const AddCars = () => {
     });
     const data = await res.json();
     if (data.insertedId) {
-      toast.success("Destination Added Successfully");
+      toast.success("Car Added Successfully");
       form.reset();
+      router.push("/myAddedCars")
     }
   };
 

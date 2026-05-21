@@ -1,6 +1,7 @@
 
 
 import DeleteButton from "@/components/DeleteButton";
+import UpdateCar from "@/components/UpdateCar";
 import { auth } from "@/lib/auth";
 import { Button } from "@heroui/react";
 import { MapPin } from "lucide-react";
@@ -131,7 +132,7 @@ const MyAddedCars = async () => {
 
                       <div className="flex flex-wrap gap-2">
                         <span className="rounded-full bg-[#0d1b2a] px-3 py-1 text-xs text-[#d8c3ad]">
-                          {car.seatCapacity} Seats
+                          {car.carType}
                         </span>
 
                         <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs text-green-400">
@@ -149,14 +150,11 @@ const MyAddedCars = async () => {
                   </div>
 
                   {/* buttons */}
-                  <div className="flex lg:flex-row items-center gap-3 sm:flex-col sm:items-end">
-                    <Link href={`/update-car/${car._id}`}>
-                      <Button className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-semibold">
-                        Update
-                      </Button>
-                    </Link>
+                  <div className="flex md:flex-row md:items-center gap-3 sm:flex-col items-end justify-end">
 
-                    <DeleteButton id={car._id} />
+                    <UpdateCar id={car._id} car={car}/>
+
+                    <DeleteButton id={car._id} carName={car.carName} />
                   </div>
                 </div>
               </div>
