@@ -1,5 +1,3 @@
-
-
 import DeleteButton from "@/components/DeleteButton";
 import UpdateCar from "@/components/UpdateCar";
 import { auth } from "@/lib/auth";
@@ -16,8 +14,16 @@ const MyAddedCars = async () => {
 
   const user = session?.user;
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  console.log(token)
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/add-car/${user?.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/add-car/${user?.id}`,{
+    headers:{
+      authorization:`Bearer ${token}`
+    }
+  }
   );
 
   const addedCarData = await res.json();

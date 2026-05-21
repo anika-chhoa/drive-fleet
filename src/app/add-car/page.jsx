@@ -55,12 +55,15 @@ const AddCars = () => {
       availabilityStatus,
       description,
     };
-    console.log(newCarData)
+    
+    const {data:tokenData}=await authClient.token()
+   
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-car`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization:`Bearer ${tokenData?.token}`
       },
       body: JSON.stringify(newCarData),
     });

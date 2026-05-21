@@ -1,12 +1,18 @@
 import CarDetailsClient from "@/components/CarDetailsClient";
-import { fetchAllCars } from "@/lib/cars/data";
-
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const CarDetailsPage = async ({ params }) => {
   const { id } = await params;
-
-  const allCars = await fetchAllCars();
-  const targetCar = allCars.find((car) => car._id == id);
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/explore/${id}`,{
+    headers:{
+      authorization:`Bearer ${token}`
+    }
+  });
+  const targetCar = await res.json();
 
   if (!targetCar) {
     return (

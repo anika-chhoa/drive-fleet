@@ -12,6 +12,7 @@ const Bookings = async () => {
 
   const user = session?.user;
 
+
   if (!user) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
@@ -24,11 +25,18 @@ const Bookings = async () => {
     );
   }
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/bookings/${user?.id}`,
     {
-      cache: "no-store",
-    },
+    headers:{
+      authorization:`Bearer ${token}`
+    }
+  }
   );
 
   const bookingCars = await res.json();

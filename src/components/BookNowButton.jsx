@@ -1,3 +1,4 @@
+"use client"
 import { authClient } from "@/lib/auth-client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -37,11 +38,13 @@ const BookNowButton = ({ car }) => {
         pickupLocation,
         dailyRentPrice,
       };
+      const {data:tokenData}=await authClient.token()
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
+          authorization:`Bearer ${tokenData?.token}`
         },
         body: JSON.stringify(bookingData),
       });
