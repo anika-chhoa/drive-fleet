@@ -1,264 +1,110 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  Car,
-  Check,
-  ChevronDown,
-  Search,
-  SlidersHorizontal,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 
-const dropdownVariants = {
-  hidden: { opacity: 0, y: -8, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.2,
-      ease: [0.16, 1, 0.3, 1],
-      staggerChildren: 0.03,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -6,
-    scale: 0.97,
-    transition: { duration: 0.15, ease: "easeIn" },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -6 },
-  visible: { opacity: 1, x: 0 },
-};
-
-const SearchBar = ({ cars = [], allCars = [] }) => {
+const SearchBar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [selectedType, setSelectedType] = useState(
-    searchParams.get("type") || "All Types",
-  );
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const dropdownRef = useRef(null);
+  const currentSearch = searchParams.get("search") || "";
+  const currentType = searchParams.get("type") || "All Types";
 
-  useEffect(() => {
-    setSelectedType(searchParams.get("type") || "All Types");
-  }, [searchParams]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const carTypes = [
-    "All Types",
-    ...Array.from(
-      new Set(allCars.map((c) => c.carType).filter(Boolean)),
-    ).sort(),
-  ];
+    const form = e.target;
+    const search = form.search.value;
+    const type = form.type.value;
 
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  const handleSearch = () => {
     const params = new URLSearchParams();
+
     if (search.trim()) {
       params.set("search", search);
     }
 
-    router.push(`/explore?${params.toString()}`);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSearch();
-  };
-
-  const handleTypeSelect = (type) => {
-    setSelectedType(type);
-    setDropdownOpen(false);
-
-    const params = new URLSearchParams(searchParams.toString());
     if (type !== "All Types") {
       params.set("type", type);
-    } else {
-      params.delete("type");
     }
+
     router.push(`/explore?${params.toString()}`);
   };
 
-  const isFiltered = selectedType !== "All Types";
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full"
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="relative w-full max-w-4xl mx-auto rounded-3xl border border-white/10 bg-gradient-to-br from-[#07182d]/80 via-[#081527]/90 to-[#0b1d36]/80 p-2 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] focus-within:border-[#FDB813]/30 transition-colors duration-300"
     >
-      <motion.div
-        animate={{
-          boxShadow: isFocused
-            ? "0 0 0 2px rgba(255,193,116,0.35), 0 8px 32px rgba(0,0,0,0.4)"
-            : "0 4px 24px rgba(0,0,0,0.3)",
-        }}
-        transition={{ duration: 0.2 }}
-        className="flex items-center bg-[#0d1c2e] border border-[#1d3557] rounded-2xl overflow-visible relative"
-      >
-        <div className="flex items-center flex-1 min-w-0 h-14 px-4 gap-3">
-          <motion.div
-            animate={{ color: isFocused ? "#ffc174" : "#4a6a8a" }}
-            transition={{ duration: 0.2 }}
-          >
-            <Search className="w-5 h-5 flex-shrink-0" />
-          </motion.div>
+      
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(253,184,19,0.08),transparent_50%)] rounded-3xl" />
+
+      <div className="flex flex-col sm:flex-row gap-2 items-center">
+        
+     
+        <div className="relative flex-1 w-full group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <Search
+              size={19}
+              className="text-[#7e8ba0] group-focus-within:text-[#FDB813] group-focus-within:scale-105 transition-all duration-300"
+            />
+          </div>
           <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
             type="text"
-            placeholder="Search make, model, or keyword…"
-            className="flex-1 bg-transparent outline-none text-[#e8f1ff] placeholder:text-[#4a6a8a] text-sm font-medium min-w-0"
+            name="search"
+            placeholder="Search Cars"
+            defaultValue={currentSearch}
+            className="w-full h-14 pl-12 pr-4 bg-transparent text-[#e8f1ff] placeholder:text-[#7e8ba0]/70 outline-none text-[15px]"
           />
         </div>
 
-        <div className="w-px h-8 bg-[#1d3557] flex-shrink-0" />
+        
+        <div className="hidden sm:block w-[1px] h-8 bg-white/10 self-center" />
 
-        <div ref={dropdownRef} className="relative flex-shrink-0">
-          <motion.button
-            onClick={() => setDropdownOpen((v) => !v)}
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 h-14 px-5 text-sm font-medium"
+       
+        <div className="relative w-full sm:w-[200px] group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <SlidersHorizontal
+              size={16}
+              className="text-[#7e8ba0] group-focus-within:text-[#FDB813] transition-colors duration-300"
+            />
+          </div>
+          <select
+            name="type"
+            defaultValue={currentType}
+            className="appearance-none w-full h-14 pl-11 pr-8 bg-transparent text-[#e8f1ff] cursor-pointer outline-none text-[15px]"
           >
-            <motion.div
-              animate={{ color: isFiltered ? "#ffc174" : "#9fb0c7" }}
-              className="flex items-center gap-1.5"
-            >
-             
-              <span className="whitespace-nowrap hidden sm:block">
-                {selectedType}
-              </span>
-              <span className="whitespace-nowrap sm:hidden block">
-                {isFiltered ? selectedType : "Type"}
-              </span>
-            </motion.div>
-            <motion.div
-              animate={{ rotate: dropdownOpen ? 180 : 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-            >
-              <ChevronDown className="w-4 h-4 text-[#4a6a8a]" />
-            </motion.div>
-            <AnimatePresence>
-              {isFiltered && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                  className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#ffc174]"
-                />
-              )}
-            </AnimatePresence>
-          </motion.button>
-
-          <AnimatePresence>
-            {dropdownOpen && (
-              <motion.div
-                variants={dropdownVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="absolute top-[calc(100%+10px)] right-0 z-50 w-52 bg-[#0d1c2e] border border-[#1d3557] rounded-2xl shadow-2xl shadow-black/60 overflow-hidden"
-                style={{ backdropFilter: "blur(12px)" }}
-              >
-                <div className="px-3 pt-3 pb-1">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#4a6a8a] px-2 mb-2">
-                    Filter by Type
-                  </p>
-                  <div className="flex flex-col gap-0.5">
-                    {carTypes.map((type) => {
-                      const isSelected = selectedType === type;
-                      const count =
-                        type === "All Types"
-                          ? allCars.length
-                          : allCars.filter(
-                              (c) =>
-                                c.carType?.toLowerCase() === type.toLowerCase(),
-                            ).length;
-
-                      return (
-                        <motion.button
-                          key={type}
-                          variants={itemVariants}
-                          onClick={() => handleTypeSelect(type)}
-                          whileHover={{ x: 3 }}
-                          transition={{ duration: 0.15 }}
-                          className={`flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors text-left ${
-                            isSelected
-                              ? "bg-[#ffc174]/15 text-[#ffc174]"
-                              : "text-[#9fb0c7] hover:bg-[#102034] hover:text-[#e8f1ff]"
-                          }`}
-                        >
-                          <span>{type}</span>
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                                isSelected
-                                  ? "bg-[#ffc174]/20 text-[#ffc174]"
-                                  : "bg-[#1d3557] text-[#4a6a8a]"
-                              }`}
-                            >
-                              {count}
-                            </span>
-                            <AnimatePresence>
-                              {isSelected && (
-                                <motion.div
-                                  initial={{ scale: 0, opacity: 0 }}
-                                  animate={{ scale: 1, opacity: 1 }}
-                                  exit={{ scale: 0, opacity: 0 }}
-                                  transition={{ duration: 0.15 }}
-                                >
-                                  <Check className="w-3.5 h-3.5 text-[#ffc174]" />
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        </motion.button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="h-3" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <option className="bg-[#081527]">All Types</option>
+            <option className="bg-[#081527]">SUV</option>
+            <option className="bg-[#081527]">Sedan</option>
+            <option className="bg-[#081527]">Luxury SUV</option>
+            <option className="bg-[#081527]">Luxury Sedan</option>
+            <option className="bg-[#081527]">Hatchback</option>
+            <option className="bg-[#081527]">Electric</option>
+            <option className="bg-[#081527]">Sports</option>
+          </select>
+        
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#7e8ba0] text-[10px] group-hover:text-[#e8f1ff] transition-colors">
+            ▼
+          </div>
         </div>
 
-        <div className="w-px h-8 bg-[#1d3557] flex-shrink-0" />
-
-        <div className="px-2 flex-shrink-0">
-          <motion.button
-            onClick={handleSearch}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.15 }}
-            className="flex items-center gap-2 h-10 px-5 rounded-xl bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-bold text-sm shadow-lg shadow-orange-900/30"
-          >
-            <Search className="w-4 h-4" />
-            <span className="hidden sm:block">Search</span>
-          </motion.button>
-        </div>
-      </motion.div>
-    </motion.div>
+      
+        <motion.button
+          whileHover={{ scale: 1.02, y: -1 }}
+          whileTap={{ scale: 0.98 }}
+          type="submit"
+          className="relative w-full sm:w-auto h-14 sm:px-8 rounded-2xl bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-semibold tracking-wide flex items-center justify-center gap-2 overflow-hidden shadow-[0_8px_25px_rgba(253,184,19,0.25)] hover:shadow-[0_12px_30px_rgba(253,184,19,0.4)] transition-all duration-300 group/btn"
+        >
+          <span className="text-[15px]">Search</span>
+          <Search size={16} className="group-hover/btn:translate-x-0.5 transition-transform" />
+        </motion.button>
+        
+      </div>
+    </motion.form>
   );
 };
 

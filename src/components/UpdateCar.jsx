@@ -46,10 +46,12 @@ const UpdateCar = ({ id, car }) => {
       );
 
       const data = await res.json();
+      if(data){
+        router.push("/myAddedCars");
+        router.refresh();
+        toast.success("Successfully Updated");
+      }
 
-      router.push("/myAddedCars");
-      router.refresh();
-      toast.success("Successfully Updated");
     } catch (error) {
       toast.error("Update failed");
       console.log(error);
@@ -70,7 +72,7 @@ const UpdateCar = ({ id, car }) => {
           <Modal.Dialog className="sm:max-w-2xl bg-[#102034] border border-[#534434]/30 text-[#e8f1ff] rounded-2xl">
             <Modal.CloseTrigger />
 
-            {/* HEADER */}
+          
             <Modal.Header className="p-3">
               <Modal.Icon className="text-[#ffc174]">
                 <BiEdit className="size-5" />
@@ -81,20 +83,20 @@ const UpdateCar = ({ id, car }) => {
               </Modal.Heading>
             </Modal.Header>
 
-            {/* BODY */}
+         
             <Modal.Body className="p-2">
               <Card className="bg-[#102034]">
                 <form onSubmit={handleUpdate} className="p-4 space-y-6">
-                  {/* ROW 1 */}
+                 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* CAR NAME */}
+                   
                     <TextField name="carName" defaultValue={car?.carName}>
                       <Label className="text-[#d8c3ad]">Car Name</Label>
                       <Input className="rounded-2xl" />
                       <FieldError />
                     </TextField>
 
-                    {/* CAR TYPE*/}
+                    
                     <TextField name="carType">
                       <Label className="text-[#d8c3ad]">Car Type</Label>
 
@@ -131,7 +133,7 @@ const UpdateCar = ({ id, car }) => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* PRICE */}
+                   
                     <TextField
                       name="dailyRentPrice"
                       defaultValue={car?.dailyRentPrice}
@@ -141,7 +143,7 @@ const UpdateCar = ({ id, car }) => {
                       <FieldError />
                     </TextField>
 
-                    {/* AVAILABILITY */}
+                   
                     <TextField name="availabilityStatus">
                       <Label className="text-[#d8c3ad]">Availability</Label>
 
@@ -174,21 +176,20 @@ const UpdateCar = ({ id, car }) => {
                     </TextField>
                   </div>
 
-                  {/* IMAGE */}
+                
                   <TextField name="imageUrl" defaultValue={car?.imageUrl}>
                     <Label className="text-[#d8c3ad]">Image URL</Label>
                     <Input type="url" className="rounded-2xl" />
                     <FieldError />
                   </TextField>
 
-                  {/* DESCRIPTION */}
+                 
                   <TextField name="description" defaultValue={car?.description}>
                     <Label className="text-[#d8c3ad]">Description</Label>
                     <TextArea className="rounded-3xl" />
                     <FieldError />
                   </TextField>
 
-                  {/* SUBMIT */}
                   <Button
                     type="submit"
                     slot="close"
