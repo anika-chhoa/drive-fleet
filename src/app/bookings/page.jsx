@@ -11,7 +11,7 @@ const Bookings = async () => {
   });
 
   const user = session?.user;
-
+  
 
   if (!user) {
     return (
@@ -28,21 +28,20 @@ const Bookings = async () => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-  
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/bookings/${user?.id}`,
     {
-    headers:{
-      authorization:`Bearer ${token}`
-    }
-  }
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
 
   const bookingCars = await res.json();
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-14 sm:px-8">
+    <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8">
       <div className="mb-10 flex items-end justify-between border-b border-[#534434]/30 pb-5">
         <div>
           <p className="text-[11px] uppercase tracking-[0.25em] text-[#a08e7a]">
@@ -73,82 +72,115 @@ const Bookings = async () => {
           </Link>
         </div>
       ) : (
-        <div className="space-y-5">
-          {bookingCars.map((booking) => {
-            const bookingDate = new Date(booking.bookingAt);
+        <div className="flex flex-col gap-8 lg:flex-row">
+          <div className="w-full rounded-2xl border border-[#534434]/20 bg-[#0d1b2a] p-6 lg:w-[300px] h-fit">
+            <div className="flex flex-col items-center text-center">
+              <div className="relative h-24 w-24 overflow-hidden rounded-full border-4 border-[#ffc174]/20">
+                <Image
+                  src={user.image}
+                  alt={user.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-            const datePart = bookingDate.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            });
+              <h2 className="mt-4 text-xl font-bold text-[#e8f1ff]">
+                {user.name}
+              </h2>
 
-            const timePart = bookingDate
-              .toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })
-              .toLowerCase()
-              .replace(" ", "");
+              <p className="text-sm text-[#a08e7a]">
+                {user.email}
+              </p>
 
-            // const count = booking.bookingCount || 1;
-            // const finalPrice = booking.dailyRentPrice * count;
+              <div className="mt-5 w-full rounded-xl border border-[#534434]/20 bg-[#102034] p-2">
 
-            return (
-              <div
-                key={booking._id}
-                className="group overflow-hidden rounded-2xl border border-[#534434]/25 bg-[#102034] p-4 transition-all duration-300 hover:border-[#ffc174]/30 hover:bg-[#13263d]"
-              >
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-[#534434]/20">
-                      <Image
-                        src={booking.imageUrl}
-                        alt={booking.carName}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="144px"
-                      />
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-sm text-[#a08e7a]">Status</span>
+
+                  <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400">
+                    Active
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full space-y-5">
+            {bookingCars.map((booking) => {
+              const bookingDate = new Date(booking.bookingAt);
+
+              const datePart = bookingDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              });
+
+              const timePart = bookingDate
+                .toLocaleTimeString("en-US", {
+                  hour: "numeric",
+                  minute: "2-digit",
+                  hour12: true,
+                })
+                .toLowerCase()
+                .replace(" ", "");
+
+              // const count = booking.bookingCount || 1;
+              // const finalPrice = booking.dailyRentPrice * count;
+
+              return (
+                <div
+                  key={booking._id}
+                  className="group overflow-hidden rounded-2xl border border-[#534434]/25 bg-[#102034] p-4 transition-all duration-300 hover:border-[#ffc174]/30 hover:bg-[#13263d]"
+                >
+                  <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-[#534434]/20">
+                        <Image
+                          src={booking.imageUrl}
+                          alt={booking.carName}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="144px"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <div>
+                          <h3 className="text-xl font-bold tracking-tight text-[#e8f1ff]">
+                            {booking.carName}
+                          </h3>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm text-[#d8c3ad]">
+                          <MapPin className="h-4 w-4 text-[#ffc174]" />
+                          <span>{booking.pickupLocation}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs text-[#a08e7a]">
+                          <CalendarDays className="h-4 w-4 text-[#ffc174]" />
+                          <span>
+                            {datePart} • {timePart}
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <div>
-                        <h3 className="text-xl font-bold tracking-tight text-[#e8f1ff]">
-                          {booking.carName}
-                        </h3>
-                      </div>
+                    <div className="flex flex-row items-end justify-between gap-5 sm:flex-col sm:items-end">
+                      <div className="text-right">
+                        <p className="text-3xl font-black tracking-tight text-[#ffc174]">
+                          ${booking.dailyRentPrice}
+                        </p>
 
-                      <div className="flex items-center gap-2 text-sm text-[#d8c3ad]">
-                        <MapPin className="h-4 w-4 text-[#ffc174]" />
-                        <span>{booking.pickupLocation}</span>
-                      </div>
-
-                      <div className="flex items-center gap-2 text-xs text-[#a08e7a]">
-                        <CalendarDays className="h-4 w-4 text-[#ffc174]" />
-                        <span>
-                          {datePart} • {timePart}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-row items-end justify-between gap-5 sm:flex-col sm:items-end">
-                    <div className="text-right">
-                      <p className="text-3xl font-black tracking-tight text-[#ffc174]">
-                        ${booking.dailyRentPrice}
-                      </p>
-
-                      {/* <p className="mt-1 text-[11px] tracking-wide text-[#a08e7a]">
+                        {/* <p className="mt-1 text-[11px] tracking-wide text-[#a08e7a]">
                         {count} {count === 1 ? "day" : "days"} × $
                         {booking.dailyRentPrice}
                       </p> */}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

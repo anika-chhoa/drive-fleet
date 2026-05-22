@@ -1,6 +1,7 @@
 import AvailableCars from "@/components/AvailableCars";
 import Banner from "@/components/Banner";
 import Features from "@/components/Features";
+import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Banner />
       <AvailableCars />
       <Features />
+      <HowItWorks />
     </div>
   );
 }
