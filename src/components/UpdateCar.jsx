@@ -14,7 +14,6 @@ import {
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
-
 import toast from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
 
@@ -48,20 +47,17 @@ const UpdateCar = ({ id, car }) => {
 
       const data = await res.json();
 
-     
-        toast.success("Successfully Updated")
-        router.push("/myAddedCars");
-        router.refresh();
-      
+      router.push("/myAddedCars");
+      router.refresh();
+      toast.success("Successfully Updated");
     } catch (error) {
-        toast.error("Update failed")
+      toast.error("Update failed");
       console.log(error);
     }
   };
 
   return (
     <Modal>
-      {/* TRIGGER */}
       <Button
         className="bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21] font-semibold"
         startContent={<BiEdit />}
@@ -69,7 +65,6 @@ const UpdateCar = ({ id, car }) => {
         Update
       </Button>
 
-      {/* BACKDROP */}
       <Modal.Backdrop className="bg-black/60 backdrop-blur-sm">
         <Modal.Container>
           <Modal.Dialog className="sm:max-w-2xl bg-[#102034] border border-[#534434]/30 text-[#e8f1ff] rounded-2xl">
@@ -99,8 +94,8 @@ const UpdateCar = ({ id, car }) => {
                       <FieldError />
                     </TextField>
 
-                    {/* CAR TYPE (REQUIRED) */}
-                    <TextField name="carType" isRequired>
+                    {/* CAR TYPE*/}
+                    <TextField name="carType">
                       <Label className="text-[#d8c3ad]">Car Type</Label>
 
                       <Select
@@ -135,7 +130,6 @@ const UpdateCar = ({ id, car }) => {
                     </TextField>
                   </div>
 
-                  {/* ROW 2 */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* PRICE */}
                     <TextField
@@ -147,8 +141,8 @@ const UpdateCar = ({ id, car }) => {
                       <FieldError />
                     </TextField>
 
-                    {/* AVAILABILITY (REQUIRED) */}
-                    <TextField name="availabilityStatus" isRequired>
+                    {/* AVAILABILITY */}
+                    <TextField name="availabilityStatus">
                       <Label className="text-[#d8c3ad]">Availability</Label>
 
                       <Select
@@ -197,6 +191,7 @@ const UpdateCar = ({ id, car }) => {
                   {/* SUBMIT */}
                   <Button
                     type="submit"
+                    slot="close"
                     className="
                       w-full h-12
                       bg-gradient-to-b from-[#FDB813] to-[#FF8C00]

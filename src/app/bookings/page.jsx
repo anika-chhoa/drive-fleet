@@ -94,7 +94,7 @@ const Bookings = async () => {
 
               <div className="mt-5 w-full rounded-xl border border-[#534434]/20 bg-[#102034] p-2">
 
-                <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <span className="text-sm text-[#a08e7a]">Status</span>
 
                   <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400">
