@@ -71,7 +71,7 @@ const CarCard = ({ car, index }) => {
             <p className="text-sm text-[#9fb0c7] leading-relaxed line-clamp-2 mt-2">
               {car.description}
             </p>
-            
+
             <div className="flex justify-between gap-3 border-t border-[#534434]/20 pt-3 mt-2">
               <div className="flex items-center gap-2 text-[#d8c3ad]">
                 <Users className="w-4 h-4 text-[#ffc174]" />
@@ -86,7 +86,7 @@ const CarCard = ({ car, index }) => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between mt-6">
             <div className="flex items-baseline text-[#ffc174]">
               <span className="text-[22px] font-black">
@@ -95,7 +95,7 @@ const CarCard = ({ car, index }) => {
               <span className="text-xs text-[#d8c3ad] ml-1">/ day</span>
             </div>
 
-            <Link href={`/explore/${car._id}`}>
+            {/* <Link href={`/explore/${car._id}`}>
               <Button
                 radius="xl"
                 size="md"
@@ -108,7 +108,24 @@ const CarCard = ({ car, index }) => {
               >
                 {isAvailable ? "View Details" : "Booked"}
               </Button>
-            </Link>
+            </Link> */}
+
+            <Button
+              radius="xl"
+              size="md"
+              disabled={!isAvailable}
+              className={`font-bold shadow-lg transition-all duration-200 ${
+                isAvailable
+                  ? "bg-gradient-to-b from-[#FDB813] to-[#FF8C00] text-[#000f21]"
+                  : "bg-[#26364a] text-[#d8c3ad]/40"
+              }`}
+            >
+              {isAvailable ? (
+                <Link href={`/explore/${car._id}`}>View Details</Link>
+              ) : (
+                "Booked"
+              )}
+            </Button>
           </div>
         </div>
       </Card>

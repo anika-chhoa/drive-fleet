@@ -18,9 +18,6 @@ const BookNowButton = ({ car }) => {
     pickupLocation,
     dailyRentPrice,
     availabilityStatus,
-    bookingCount = 0,
-    rating = 0,
-    reviewCount = 0,
   } = car;
 
   const handleBooking = async () => {

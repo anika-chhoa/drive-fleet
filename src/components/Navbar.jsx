@@ -61,25 +61,15 @@ export default function Navbar() {
               <Menu />
             </button>
 
-            {/* <Link href="/" className="flex items-center gap-2">
-              <div className="px-2 py-1 bg-[#F59E0B] rounded-xl">
-                <Car className="w-5 h-5 text-black" />
-              </div>
-              <span className="text-xl font-bold text-[#ffc174]">
-                DriveFleet
-              </span>
-            </Link> */}
             <Link href="/" className="flex items-center gap-3">
-              {/* Icon */}
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#ffc174]/10">
-                {/* <Gauge className="w-6 h-6 text-[#ffc174]" /> */}
+              
                 <IoCarSportSharp className="w-6 h-6 text-[#ffc174]" />
               </div>
 
-              {/* Vertical divider */}
               <div className="w-px h-9 bg-[#ffc174]/20" />
 
-              {/* Text block */}
+             
               <div className="flex flex-col leading-tight">
                 <span
                   className="text-xl font-bold text-[#ffc174] tracking-tight"

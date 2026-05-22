@@ -1,6 +1,4 @@
 "use client";
-// import { authClient } from "@/lib/auth-client";
-// import { DateField, Label } from "@heroui/react";
 
 import { motion } from "framer-motion";
 import {
@@ -8,7 +6,6 @@ import {
   Bolt,
   CalendarCheck,
   Car,
-
   Flame,
   MapPin,
   RefreshCw,
@@ -18,10 +15,7 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
-// import { useRouter } from "next/navigation";
 
-// import { useState } from "react";
-// import toast from "react-hot-toast";
 
 import BookingCard from "./BookingCard";
 
@@ -92,10 +86,6 @@ const FeaturePill = ({ feature }) => (
 );
 
 const CarDetailsClient = ({ car }) => {
-  // const { data: session } = authClient.useSession();
-  // const user = session?.user;
-  // const [departureDate, setDepartureDate] = useState(null);
-  // const router = useRouter();
 
   const {
     _id,
@@ -112,51 +102,6 @@ const CarDetailsClient = ({ car }) => {
     rating = 0,
     reviewCount = 0,
   } = car;
-
-  // const handleBooking = async () => {
-  //   try {
-  //     const bookingData = {
-  //       userId: user?.id,
-  //       userImage: user?.image,
-  //       userName: user?.name,
-  //       userEmail: user?.email,
-  //       _id,
-  //       carName,
-  //       carType,
-  //       imageUrl,
-  //       availabilityStatus,
-  //       pickupLocation,
-  //       dailyRentPrice,
-  //       bookingCount,
-  //       rating,
-  //       reviewCount,
-  //       departureDate,
-  //     };
-
-  //     const res = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/bookings/${_id}`,
-  //       {
-  //         method: "PATCH",
-  //         headers: {
-  //           "content-type": "application/json",
-  //         },
-  //         body: JSON.stringify(bookingData),
-  //       },
-  //     );
-
-  //     const data = await res.json();
-
-  //     if (data) {
-  //       toast.success(`Successfully booked ${carName}`);
-  //       router.push("/bookings");
-  //     } else {
-  //       toast.error(data?.message || "Booking failed");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Something went wrong");
-  //   }
-  // };
 
   const isAvailable = availabilityStatus === "Available";
   const { label: popLabel } = getPopularity(bookingCount);
